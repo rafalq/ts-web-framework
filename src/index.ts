@@ -5,5 +5,7 @@ const user = new User({
 	age: 23,
 });
 
+user.set({ name: "Storm" });
+
 console.log(user.get("name"));
 console.log(user.get("age"));

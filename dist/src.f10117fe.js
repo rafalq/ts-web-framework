@@ -131,6 +131,9 @@ var User = /** @class */function () {
   User.prototype.get = function (propName) {
     return this.data[propName];
   };
+  User.prototype.set = function (update) {
+    Object.assign(this.data, update);
+  };
   return User;
 }();
 exports.User = User;
@@ -144,6 +147,9 @@ var User_1 = require("./models/User");
 var user = new User_1.User({
   name: "Johnny",
   age: 23
+});
+user.set({
+  name: "Storm"
 });
 console.log(user.get("name"));
 console.log(user.get("age"));
@@ -172,7 +178,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40493" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35787" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
