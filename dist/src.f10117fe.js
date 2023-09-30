@@ -134,6 +134,7 @@ var User = /** @class */function () {
   User.prototype.set = function (update) {
     Object.assign(this.data, update);
   };
+  User.prototype.on = function (eventName, callback) {};
   return User;
 }();
 exports.User = User;
