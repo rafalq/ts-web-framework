@@ -5,7 +5,6 @@ const user = new User({
 	age: 23,
 });
 
-user.set({ name: "Storm" });
+user.on("change", () => {});
 
-console.log(user.get("name"));
-console.log(user.get("age"));
+console.log(user);
