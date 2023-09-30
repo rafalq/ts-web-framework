@@ -127,6 +127,7 @@ exports.User = void 0;
 var User = /** @class */function () {
   function User(data) {
     this.data = data;
+    this.events = {};
   }
   User.prototype.get = function (propName) {
     return this.data[propName];
