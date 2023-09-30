@@ -5,6 +5,18 @@ const user = new User({
 	age: 23,
 });
 
-user.on("change", () => {});
+user.on("change", () => {
+	console.log("Change #1");
+});
 
-console.log(user);
+user.on("change", () => {
+	console.log("Change #2");
+});
+
+user.on("save", () => {
+	console.log("Save was triggered");
+});
+
+user.trigger("change");
+user.trigger("save");
+user.trigger("test");
