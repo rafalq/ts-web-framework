@@ -8,4 +8,8 @@ export class Attributes<T> {
 	set(update: Partial<T>): void {
 		this.data = { ...this.data, ...update };
 	}
+
+	getAll(): T {
+		return this.data;
+	}
 }

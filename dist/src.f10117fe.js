@@ -5504,6 +5504,9 @@ var Attributes = /** @class */function () {
   Attributes.prototype.set = function (update) {
     this.data = __assign(__assign({}, this.data), update);
   };
+  Attributes.prototype.getAll = function () {
+    return this.data;
+  };
   return Attributes;
 }();
 exports.Attributes = Attributes;
