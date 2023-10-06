@@ -5606,12 +5606,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Collection = void 0;
-var User_1 = require("./User");
 var Eventing_1 = require("./Eventing");
 var axios_1 = __importDefault(require("axios"));
 var Collection = /** @class */function () {
-  function Collection(rootUrl) {
+  function Collection(rootUrl, deserialize) {
     this.rootUrl = rootUrl;
+    this.deserialize = deserialize;
     this.models = [];
     this.events = new Eventing_1.Eventing();
   }
@@ -5633,8 +5633,7 @@ var Collection = /** @class */function () {
     var _this = this;
     axios_1.default.get(this.rootUrl).then(function (response) {
       return response.data.forEach(function (val) {
-        var user = User_1.User.buildUser(val);
-        _this.models.push(user);
+        _this.models.push(_this.deserialize(val));
       });
     });
     this.trigger("change");
@@ -5645,19 +5644,22 @@ exports.Collection = Collection;
 function AxiosResponse(reason) {
   throw new Error("Function not implemented.");
 }
-},{"./User":"src/models/User.ts","./Eventing":"src/models/Eventing.ts","axios":"node_modules/axios/index.js"}],"src/index.ts":[function(require,module,exports) {
+},{"./Eventing":"src/models/Eventing.ts","axios":"node_modules/axios/index.js"}],"src/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var User_1 = require("./models/User");
 var Collection_1 = require("./models/Collection");
-var collection = new Collection_1.Collection("http://localhost:3000/users");
+var collection = new Collection_1.Collection("http://localhost:3000/users", function (json) {
+  return User_1.User.buildUser(json);
+});
 collection.on("change", function () {
   console.log(collection);
 });
 collection.fetch();
-},{"./models/Collection":"src/models/Collection.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./models/User":"src/models/User.ts","./models/Collection":"src/models/Collection.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
