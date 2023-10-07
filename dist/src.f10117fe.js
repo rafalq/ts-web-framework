@@ -128,6 +128,14 @@ var UserForm = /** @class */function () {
   function UserForm(parent) {
     this.parent = parent;
   }
+  UserForm.prototype.eventsMap = function () {
+    return {
+      "click:button": this.onButtonClick
+    };
+  };
+  UserForm.prototype.onButtonClick = function () {
+    console.log("button clicked");
+  };
   UserForm.prototype.template = function () {
     return "\n      <div>\n        <h1>UserForm</h1>\n        <input />\n      </div>\n      ";
   };
