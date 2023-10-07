@@ -130,18 +130,37 @@ var UserForm = /** @class */function () {
   }
   UserForm.prototype.eventsMap = function () {
     return {
-      "click:button": this.onButtonClick
+      "click:button": this.onButtonClick,
+      "mouseenter:h1": this.onHeaderHover
     };
   };
   UserForm.prototype.onButtonClick = function () {
     console.log("button clicked");
   };
+  UserForm.prototype.onHeaderHover = function () {
+    console.log("h1 hovered over");
+  };
   UserForm.prototype.template = function () {
-    return "\n      <div>\n        <h1>UserForm</h1>\n        <input />\n      </div>\n      ";
+    return "\n      <div>\n        <h1>UserForm</h1>\n        <input />\n        <button>CLICK</button>\n      </div>\n      ";
+  };
+  UserForm.prototype.bindEvents = function (fragment) {
+    var eventsMap = this.eventsMap();
+    var _loop_1 = function _loop_1(eventKey) {
+      var _a = eventKey.split(":"),
+        eventName = _a[0],
+        selector = _a[1];
+      fragment.querySelectorAll(selector).forEach(function (el) {
+        return el.addEventListener(eventName, eventsMap[eventKey]);
+      });
+    };
+    for (var eventKey in eventsMap) {
+      _loop_1(eventKey);
+    }
   };
   UserForm.prototype.render = function () {
     var templateEl = document.createElement("template");
     templateEl.innerHTML = this.template();
+    this.bindEvents(templateEl.content);
     this.parent.append(templateEl.content);
   };
   return UserForm;
