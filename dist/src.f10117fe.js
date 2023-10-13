@@ -129,6 +129,13 @@ var UserForm = /** @class */function () {
     var _this = this;
     this.parent = parent;
     this.model = model;
+    this.onSetNameClick = function () {
+      var input = _this.parent.querySelector("input");
+      var name = input === null || input === void 0 ? void 0 : input.value;
+      _this.model.set({
+        name: name
+      });
+    };
     this.onSetAgeClick = function () {
       _this.model.setRandomAge();
     };
@@ -142,11 +149,12 @@ var UserForm = /** @class */function () {
   };
   UserForm.prototype.eventsMap = function () {
     return {
-      "click:.set-age": this.onSetAgeClick
+      "click:.set-age": this.onSetAgeClick,
+      "click:.set-name": this.onSetNameClick
     };
   };
   UserForm.prototype.template = function () {
-    return "\n      <div>\n        <h1>UserForm</h1>\n        <p>User: ".concat(this.model.get("name"), " ").concat(this.model.get("id") === undefined ? "" : "#".concat(this.model.get("id")), "</p>\n        <p>User Age: ").concat(this.model.get("age"), "</p>\n        <input />\n        <button>CLICK</button>\n        <button class=\"set-age\">SET RANDOM AGE</button>\n      </div>\n      ");
+    return "\n      <div>\n        <h1>UserForm</h1>\n        <p>User: ".concat(this.model.get("name"), " ").concat(this.model.get("id") === undefined ? "" : "#".concat(this.model.get("id")), "</p>\n        <p>User Age: ").concat(this.model.get("age"), "</p>\n        <input />\n        <button class=\"set-name\">CHANGE NAME</button>\n        <button class=\"set-age\">SET RANDOM AGE</button>\n      </div>\n      ");
   };
   UserForm.prototype.bindEvents = function (fragment) {
     var eventsMap = this.eventsMap();
