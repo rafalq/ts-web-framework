@@ -126,23 +126,20 @@ Object.defineProperty(exports, "__esModule", {
 exports.UserForm = void 0;
 var UserForm = /** @class */function () {
   function UserForm(parent, model) {
+    var _this = this;
     this.parent = parent;
     this.model = model;
+    this.onSetAgeClick = function () {
+      _this.model.setRandomAge();
+    };
   }
   UserForm.prototype.eventsMap = function () {
     return {
-      "click:button": this.onButtonClick,
-      "mouseenter:h1": this.onHeaderHover
+      "click:.set-age": this.onSetAgeClick
     };
   };
-  UserForm.prototype.onButtonClick = function () {
-    console.log("button clicked");
-  };
-  UserForm.prototype.onHeaderHover = function () {
-    console.log("h1 hovered over");
-  };
   UserForm.prototype.template = function () {
-    return "\n      <div>\n        <h1>UserForm</h1>\n        <p>User: ".concat(this.model.get("name"), " ").concat(this.model.get("id") === undefined ? "" : "#".concat(this.model.get("id")), "</p>\n        <p>User Age: ").concat(this.model.get("age"), "</p>\n        <input />\n        <button>CLICK</button>\n      </div>\n      ");
+    return "\n      <div>\n        <h1>UserForm</h1>\n        <p>User: ".concat(this.model.get("name"), " ").concat(this.model.get("id") === undefined ? "" : "#".concat(this.model.get("id")), "</p>\n        <p>User Age: ").concat(this.model.get("age"), "</p>\n        <input />\n        <button>CLICK</button>\n        <button class=\"set-age\">SET RANDOM AGE</button>\n      </div>\n      ");
   };
   UserForm.prototype.bindEvents = function (fragment) {
     var eventsMap = this.eventsMap();
@@ -5697,6 +5694,12 @@ var User = /** @class */function (_super) {
       return User.buildUser(json);
     });
   };
+  User.prototype.setRandomAge = function () {
+    var age = Math.round(Math.random() * 100);
+    this.set({
+      age: age
+    });
+  };
   return User;
 }(Model_1.Model);
 exports.User = User;
@@ -5739,7 +5742,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36663" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45893" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
