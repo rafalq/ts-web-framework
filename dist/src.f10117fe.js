@@ -132,7 +132,14 @@ var UserForm = /** @class */function () {
     this.onSetAgeClick = function () {
       _this.model.setRandomAge();
     };
+    this.bindModel();
   }
+  UserForm.prototype.bindModel = function () {
+    var _this = this;
+    this.model.on("change", function () {
+      _this.render();
+    });
+  };
   UserForm.prototype.eventsMap = function () {
     return {
       "click:.set-age": this.onSetAgeClick
@@ -156,6 +163,7 @@ var UserForm = /** @class */function () {
     }
   };
   UserForm.prototype.render = function () {
+    this.parent.innerHTML = "";
     var templateEl = document.createElement("template");
     templateEl.innerHTML = this.template();
     this.bindEvents(templateEl.content);
