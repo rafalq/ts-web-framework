@@ -117,50 +117,26 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/views/UserForm.ts":[function(require,module,exports) {
+})({"src/views/View.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.UserForm = void 0;
-var UserForm = /** @class */function () {
-  function UserForm(parent, model) {
-    var _this = this;
+exports.View = void 0;
+var View = /** @class */function () {
+  function View(parent, model) {
     this.parent = parent;
     this.model = model;
-    this.onSetNameClick = function () {
-      var input = _this.parent.querySelector("input");
-      var name = input === null || input === void 0 ? void 0 : input.value;
-      if (name) {
-        _this.model.set({
-          name: name
-        });
-      } else {
-        alert("Name needs at least 1 character");
-      }
-    };
-    this.onSetAgeClick = function () {
-      _this.model.setRandomAge();
-    };
     this.bindModel();
   }
-  UserForm.prototype.bindModel = function () {
+  View.prototype.bindModel = function () {
     var _this = this;
     this.model.on("change", function () {
       _this.render();
     });
   };
-  UserForm.prototype.eventsMap = function () {
-    return {
-      "click:.set-age": this.onSetAgeClick,
-      "click:.set-name": this.onSetNameClick
-    };
-  };
-  UserForm.prototype.template = function () {
-    return "\n      <div>\n        <h1>UserForm</h1>\n        <p>User: ".concat(this.model.get("name"), " ").concat(this.model.get("id") === undefined ? "" : "#".concat(this.model.get("id")), "</p>\n        <p>User Age: ").concat(this.model.get("age"), "</p>\n        <input />\n        <button class=\"set-name\">CHANGE NAME</button>\n        <button class=\"set-age\">SET RANDOM AGE</button>\n      </div>\n      ");
-  };
-  UserForm.prototype.bindEvents = function (fragment) {
+  View.prototype.bindEvents = function (fragment) {
     var eventsMap = this.eventsMap();
     var _loop_1 = function _loop_1(eventKey) {
       var _a = eventKey.split(":"),
@@ -174,17 +150,77 @@ var UserForm = /** @class */function () {
       _loop_1(eventKey);
     }
   };
-  UserForm.prototype.render = function () {
+  View.prototype.render = function () {
     this.parent.innerHTML = "";
     var templateEl = document.createElement("template");
     templateEl.innerHTML = this.template();
     this.bindEvents(templateEl.content);
     this.parent.append(templateEl.content);
   };
-  return UserForm;
+  return View;
 }();
+exports.View = View;
+},{}],"src/views/UserForm.ts":[function(require,module,exports) {
+"use strict";
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+    return _extendStatics(d, b);
+  };
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    _extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UserForm = void 0;
+var View_1 = require("./View");
+var UserForm = /** @class */function (_super) {
+  __extends(UserForm, _super);
+  function UserForm() {
+    var _this = _super !== null && _super.apply(this, arguments) || this;
+    _this.onSetNameClick = function () {
+      var input = _this.parent.querySelector("input");
+      var name = input === null || input === void 0 ? void 0 : input.value;
+      if (name) {
+        _this.model.set({
+          name: name
+        });
+      } else {
+        alert("Name needs at least 1 character");
+      }
+    };
+    _this.onSetAgeClick = function () {
+      _this.model.setRandomAge();
+    };
+    return _this;
+  }
+  UserForm.prototype.eventsMap = function () {
+    return {
+      "click:.set-age": this.onSetAgeClick,
+      "click:.set-name": this.onSetNameClick
+    };
+  };
+  UserForm.prototype.template = function () {
+    return "\n      <div>\n        <h1>UserForm</h1>\n        <p>User: ".concat(this.model.get("name"), " ").concat(this.model.get("id") === undefined ? "" : "#".concat(this.model.get("id")), "</p>\n        <p>User Age: ").concat(this.model.get("age"), "</p>\n        <input />\n        <button class=\"set-name\">CHANGE NAME</button>\n        <button class=\"set-age\">SET RANDOM AGE</button>\n      </div>\n      ");
+  };
+  return UserForm;
+}(View_1.View);
 exports.UserForm = UserForm;
-},{}],"src/models/Model.ts":[function(require,module,exports) {
+},{"./View":"src/views/View.ts"}],"src/models/Model.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5762,7 +5798,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45893" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45015" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
