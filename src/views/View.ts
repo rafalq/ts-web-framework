@@ -60,6 +60,8 @@ export abstract class View<
 		}
 	}
 
+	onRender(): void {}
+
 	render(): void {
 		this.parent.innerHTML = "";
 		const templateEl =
@@ -68,6 +70,8 @@ export abstract class View<
 
 		this.bindEvents(templateEl.content);
 		this.mapRegions(templateEl.content);
+
+		this.onRender();
 
 		this.parent.append(templateEl.content);
 	}
