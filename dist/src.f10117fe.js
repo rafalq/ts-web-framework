@@ -128,8 +128,12 @@ var View = /** @class */function () {
   function View(parent, model) {
     this.parent = parent;
     this.model = model;
+    this.regions = {};
     this.bindModel();
   }
+  View.prototype.regionsMap = function () {
+    return {};
+  };
   View.prototype.eventsMap = function () {
     return {};
   };
@@ -153,17 +157,28 @@ var View = /** @class */function () {
       _loop_1(eventKey);
     }
   };
+  View.prototype.mapRegions = function (fragment) {
+    var regionsMap = this.regionsMap();
+    for (var key in regionsMap) {
+      var selector = regionsMap[key];
+      var element = fragment.querySelector(selector);
+      if (element) {
+        this.regions[key] = element;
+      }
+    }
+  };
   View.prototype.render = function () {
     this.parent.innerHTML = "";
     var templateEl = document.createElement("template");
     templateEl.innerHTML = this.template();
     this.bindEvents(templateEl.content);
+    this.mapRegions(templateEl.content);
     this.parent.append(templateEl.content);
   };
   return View;
 }();
 exports.View = View;
-},{}],"src/views/UserForm.ts":[function(require,module,exports) {
+},{}],"src/views/UserEdit.ts":[function(require,module,exports) {
 "use strict";
 
 var __extends = this && this.__extends || function () {
@@ -189,44 +204,25 @@ var __extends = this && this.__extends || function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.UserForm = void 0;
+exports.UserEdit = void 0;
 var View_1 = require("./View");
-var UserForm = /** @class */function (_super) {
-  __extends(UserForm, _super);
-  function UserForm() {
-    var _this = _super !== null && _super.apply(this, arguments) || this;
-    _this.onSaveClick = function () {
-      _this.model.save();
-    };
-    _this.onSetNameClick = function () {
-      var input = _this.parent.querySelector("input");
-      var name = input === null || input === void 0 ? void 0 : input.value;
-      if (name) {
-        _this.model.set({
-          name: name
-        });
-      } else {
-        alert("Name needs at least 1 character");
-      }
-    };
-    _this.onSetAgeClick = function () {
-      _this.model.setRandomAge();
-    };
-    return _this;
+var UserEdit = /** @class */function (_super) {
+  __extends(UserEdit, _super);
+  function UserEdit() {
+    return _super !== null && _super.apply(this, arguments) || this;
   }
-  UserForm.prototype.eventsMap = function () {
+  UserEdit.prototype.regionsMap = function () {
     return {
-      "click:.set-age": this.onSetAgeClick,
-      "click:.set-name": this.onSetNameClick,
-      "click:.save-model": this.onSaveClick
+      userShow: ".user-show",
+      userForm: ".user-form"
     };
   };
-  UserForm.prototype.template = function () {
-    return "\n      <div>\n        <input placeholder=\"".concat(this.model.get("name"), "\"/>\n        <button class=\"set-name\">CHANGE NAME</button>\n        <button class=\"set-age\">SET RANDOM AGE</button>\n        <button class=\"save-model\">SAVE USER</button>\n      </div>\n      ");
+  UserEdit.prototype.template = function () {
+    return "\n      <div>\n        <div class=\"user-show\"></div>\n        <div class=\"user-form\"></div>\n      </div>\n    ";
   };
-  return UserForm;
+  return UserEdit;
 }(View_1.View);
-exports.UserForm = UserForm;
+exports.UserEdit = UserEdit;
 },{"./View":"src/views/View.ts"}],"src/models/Model.ts":[function(require,module,exports) {
 "use strict";
 
@@ -5772,15 +5768,16 @@ exports.User = User;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var UserForm_1 = require("./views/UserForm");
+var UserEdit_1 = require("./views/UserEdit");
 var User_1 = require("./models/User");
 var user = User_1.User.buildUser({
   name: "Ronan",
   age: 76
 });
-var userForm = new UserForm_1.UserForm(document.getElementById("root"), user);
-userForm.render();
-},{"./views/UserForm":"src/views/UserForm.ts","./models/User":"src/models/User.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var userEdit = new UserEdit_1.UserEdit(document.getElementById("root"), user);
+userEdit.render();
+console.log(userEdit);
+},{"./views/UserEdit":"src/views/UserEdit.ts","./models/User":"src/models/User.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
