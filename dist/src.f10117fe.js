@@ -132,9 +132,13 @@ var UserForm = /** @class */function () {
     this.onSetNameClick = function () {
       var input = _this.parent.querySelector("input");
       var name = input === null || input === void 0 ? void 0 : input.value;
-      _this.model.set({
-        name: name
-      });
+      if (name) {
+        _this.model.set({
+          name: name
+        });
+      } else {
+        alert("Name needs at least 1 character");
+      }
     };
     this.onSetAgeClick = function () {
       _this.model.setRandomAge();
