@@ -130,6 +130,9 @@ var View = /** @class */function () {
     this.model = model;
     this.bindModel();
   }
+  View.prototype.eventsMap = function () {
+    return {};
+  };
   View.prototype.bindModel = function () {
     var _this = this;
     this.model.on("change", function () {
@@ -192,6 +195,9 @@ var UserForm = /** @class */function (_super) {
   __extends(UserForm, _super);
   function UserForm() {
     var _this = _super !== null && _super.apply(this, arguments) || this;
+    _this.onSaveClick = function () {
+      _this.model.save();
+    };
     _this.onSetNameClick = function () {
       var input = _this.parent.querySelector("input");
       var name = input === null || input === void 0 ? void 0 : input.value;
@@ -211,11 +217,12 @@ var UserForm = /** @class */function (_super) {
   UserForm.prototype.eventsMap = function () {
     return {
       "click:.set-age": this.onSetAgeClick,
-      "click:.set-name": this.onSetNameClick
+      "click:.set-name": this.onSetNameClick,
+      "click:.save-model": this.onSaveClick
     };
   };
   UserForm.prototype.template = function () {
-    return "\n      <div>\n        <h1>UserForm</h1>\n        <p>User: ".concat(this.model.get("name"), " ").concat(this.model.get("id") === undefined ? "" : "#".concat(this.model.get("id")), "</p>\n        <p>User Age: ").concat(this.model.get("age"), "</p>\n        <input />\n        <button class=\"set-name\">CHANGE NAME</button>\n        <button class=\"set-age\">SET RANDOM AGE</button>\n      </div>\n      ");
+    return "\n      <div>\n        <input placeholder=\"".concat(this.model.get("name"), "\"/>\n        <button class=\"set-name\">CHANGE NAME</button>\n        <button class=\"set-age\">SET RANDOM AGE</button>\n        <button class=\"save-model\">SAVE USER</button>\n      </div>\n      ");
   };
   return UserForm;
 }(View_1.View);
